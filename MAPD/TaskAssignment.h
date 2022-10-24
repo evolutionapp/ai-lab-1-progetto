@@ -45,7 +45,7 @@ public:
 
 
     TaskAssignment(AgentLoader* agents, TaskLoader* tasks, MapLoaderCost* map, TA_Options ta_opt, options pl_option, bool real_cost, float pl_time_limit);
-    bool assignTasks();
+    bool assignTasks(string output);
     void initializeOneShot();
     void initializeOnline();
     void initializeAssignments();

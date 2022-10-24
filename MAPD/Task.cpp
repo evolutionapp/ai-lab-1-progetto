@@ -73,7 +73,7 @@ void TaskLoader::loadKiva(const std::string fname, MapLoaderCost &ml){
     this->num_of_tasks = task_num;
 
 
-     cout<<"MAP LOADE ENPOINTS"<<ml.endpoints.size()<<endl;
+     
     for (int i = 0; i < task_num; i++)
     {
         int t,s, g, ts, tg;

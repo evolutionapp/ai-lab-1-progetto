@@ -30,7 +30,7 @@ bool OnlineSimu::simulate(bool anytime){
         if(timestep < taskQueue.size() && taskQueue[timestep].size()>0) {
             setTasks(timestep);
             taskAssignment->start_timestep = timestep-1;
-            taskAssignment->assignTasks();
+            taskAssignment->assignTasks("");
             if (anytime)
                 taskAssignment->optimize(awaiting_tasks);
         }

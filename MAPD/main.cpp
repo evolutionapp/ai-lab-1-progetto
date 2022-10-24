@@ -21,7 +21,7 @@
 #include "TaskAssignmentPPTask.h"
 #include "online_simu.h"
 int map_cols=0;
-int screen = 3;
+int screen = 1;
 /*
 ./MAPD 
 -m kiva-20-500-5.map 
@@ -94,14 +94,18 @@ int main(int argc, char** argv){
     taskLoader->loadKiva(task,*mapLoader);
     
 
-    cout<<"Mappa caricata"<<endl;
+    cout<<"- Mappa caricata"<<endl;
     
     map_cols = mapLoader->cols;
 
-    cout<<"Task e agenti caricati"<<endl;
+    cout<<"- Task e agenti caricati"<<endl<<endl;
+
+    cout<<"AGENTI:"<<endl;
     agentLoader->print();
+
+    cout<<endl<<"TASKS:"<<endl;
     taskLoader->printTasks();
-    
+    cout<<endl<<endl;
     //Imposto l'obiettivo
     TA_Options ta_options;
     ta_options.objective = OBJECTIVE::TOTAL_TRAVEL_DELAY;  
@@ -110,11 +114,11 @@ int main(int argc, char** argv){
 
     TaskAssignment* taskAssignment;
     if (regret_task){
-        cout<<"PP Regret Task"<<endl;
+        cout<<"ALGORITMO USATO : PP Regret Task"<<endl<<endl;
         taskAssignment = new TaskAssignmentRegretTask(agentLoader,taskLoader,mapLoader, ta_options, options1,real_cost,0 /*time_limit*/);
     }
     else if (!regret){
-        cout<<"PP"<<endl;
+        cout<<"ALGORITMO USATO : PP"<<endl<<endl;
 
         taskAssignment = new TaskAssignmentPP(agentLoader,taskLoader,mapLoader, ta_options, options1,real_cost,0 /*time_limit*/);
     }
@@ -124,10 +128,9 @@ int main(int argc, char** argv){
     taskAssignment->initializeOneShot();
 
     //Assegnamento task (RMCA)
-    taskAssignment->assignTasks();
-    cout<<"Assegnamento task completato"<<endl;
+    taskAssignment->assignTasks(output);
     
-
+/*
 
     int ideal_cost = 0;
     int ideal_delay = 0;
@@ -188,9 +191,9 @@ int main(int argc, char** argv){
 //        }
         PathPlanner* planner;
         bool success;
-
-        planner = new PathPlanner(taskAssignment->assignments,0 /*time_limit*/,s,screen, options1,mapLoader);
-        success = planner->startPlan();
+*/
+ //       planner = new PathPlanner(taskAssignment->assignments,0 /*time_limit*/,s,screen, options1,mapLoader);
+   /*     success = planner->startPlan();
 
         if(screen >=1)
             planner->printPath();
@@ -230,7 +233,7 @@ int main(int argc, char** argv){
             stats.close();
         }
 
-    }
+    }*/
 
     
 

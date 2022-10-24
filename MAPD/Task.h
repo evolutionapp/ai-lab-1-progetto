@@ -62,7 +62,7 @@ public:
     vector<Task*> all_tasks_vec;
     void printTasks(){
         for(auto t : all_tasks){
-            cout << "Task:" <<t->task_id << ", release_time:" <<t->initial_time
+            cout << "- Task:" <<t->task_id << ", release_time:" <<t->initial_time
             <<", Initial:(" <<t->initial_location/map_cols<<","<<t->initial_location%map_cols<<"),"
             <<" Goal :(" <<t->goal_location/map_cols<<","<<t->goal_location%map_cols<<"),"<<endl;
         }

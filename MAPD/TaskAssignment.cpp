@@ -58,9 +58,9 @@ void TaskAssignment::initializeAssignments(){
 
 
 
-bool TaskAssignment::assignTasks() {
+bool TaskAssignment::assignTasks(string output) {
  
-    cout<<"** Inizio assegnamento Task **"<<endl;
+    cout<<"** INIZIO ASSEGNAMENTO TASK **"<<endl;
 
 
 
@@ -68,12 +68,12 @@ bool TaskAssignment::assignTasks() {
     initialize_heaps();
 
    
-    cout<<"Costruisco l'heap"<<endl;
+    cout<<"- Costruisco l'heap"<<endl;
     //Costruisce H 
     buildAssignmentHeap();
     this->first_build = false;
     
-    cout<<"Costruzione heap terminata"<<endl;
+    cout<<"- Costruzione heap terminata"<<endl<<endl;
 
     int NUM_AGENTS=agents->num_of_agents;
     int NUNM_TASKS=tasks->num_of_tasks;
@@ -86,7 +86,7 @@ bool TaskAssignment::assignTasks() {
     //Algoritmo 1
     while (!unassigned_tasks.empty()){
      
-        cout <<"Seleziono il task tra i "<< unassigned_tasks.size()<<" tasks."<<endl;
+        //cout <<"Seleziono il task tra i "<< unassigned_tasks.size()<<" tasks."<<endl;
         
 
         Assignment* min_cost_assign =  get_best_assignment();
@@ -97,11 +97,7 @@ bool TaskAssignment::assignTasks() {
 
       
 
-        /*cout<<"CONTROLLONE"<<endl<<endl<<endl<<endl;
-        Assignment* hpAssignament =  get_assignment(agent_id,task_id);
-        hpAssignament->print();
-        min_cost_assign->print();
-        cout<<"FINE CONTROLLONE"<<endl<<endl<<endl<<endl;*/
+  
         Task* task = min_cost_assign->new_add_task;
         
         cout <<"Task:" << task_id << " Assegnato all'agente: " << agent_id<<endl;
@@ -116,20 +112,9 @@ bool TaskAssignment::assignTasks() {
         if(!min_cost_assign->path.empty()){
 
             assert(assignments[agent_id].path.size()==assignments[agent_id].path_length);
-
-            /*NON DOVREBBE SERVIRE IN QUANTO RAPPRESENTA SOLAMENTE UN CONTROLLO DI CONFLITTI*/
-            /*INIZIO CODICE NON USATO*/
-            constraintTable.delete_path(agent_id, assignments[agent_id].path);
-            constraintTable.insert_path(agent_id, min_cost_assign->path);
-            /*FINE CODICE NON USATO*/
-
             assignments[agent_id].path = min_cost_assign->path;
             assignments[agent_id].path_length = min_cost_assign->path.size();
         }
-        /*INIZIO CODICE NON USATO*/
-        constraintTable.delete_dock(assignments[agent_id].actions.back().location,agent_id);
-        constraintTable.dock(min_cost_assign->actions.back().location,agent_id,min_cost_assign->actions.back().real_action_time);
-        /*INIZIO CODICE NON USATO*/
 
         assignments[agent_id].actions = min_cost_assign->actions;
         assignments[agent_id].ideal_cost = min_cost_assign->ideal_cost;
@@ -148,7 +133,7 @@ bool TaskAssignment::assignTasks() {
         }
 
         
-        cout <<"INCREMENTO DI COSTO:" <<min_cost_assign->cost_increase <<endl;
+        cout <<"Incremento di costo:" <<min_cost_assign->cost_increase <<endl<<endl;
         
 
 
@@ -166,21 +151,27 @@ bool TaskAssignment::assignTasks() {
     }
     
     ofstream stats;
-    stats.open("assegnamento.txt", ios::app);
+    stats.open(output, ios::app);
+
+    stats<<NUM_AGENTS<<endl;
+    stats<<NUNM_TASKS<<endl;
     for(int i=0;i<NUM_AGENTS;i++)
     {
-        stats<<"AGENTE "<<i << " TASKS :";
+        stats<<i;
         for(int j=0;j<NUNM_TASKS;j++)
         {
             if(assegnamenti[i][j]==1)
             {
-                stats<<" "<<j<<",";
+                stats<<" "<<j;
             }
         }
+        stats<<" -1";
         stats<<endl;
     }
+   
     stats.close();   
-            
+    
+    
     cout<<"** FINE ASSEGNAMENTO TASK **"<<endl<<endl;
     
 
@@ -512,7 +503,7 @@ bool TaskAssignment::selectRemoveRepair(std::unordered_set<int>& awaiting_tasks)
         if (screen >= 3)
             cout << "Start assignment" << endl;
         //RMCA
-        assignTasks();
+        assignTasks("");
 
         if (screen >= 2)
             cout << "Makespan after re-assignment: " << current_makespan << ", Delay after re-assignment: "

@@ -40,7 +40,7 @@ public:
     }
     void print(){
         for(auto a: agents){
-            cout<<"Agent: "<< a->agent_id<<", ("<<a->initial_location/map_cols<<","<<a->initial_location%map_cols<<"),"<<a->capacity<<endl;
+            cout<<"- Agent: "<< a->agent_id<<", ("<<a->initial_location/map_cols<<","<<a->initial_location%map_cols<<"),"<<a->capacity<<endl;
         }
     }
 };
