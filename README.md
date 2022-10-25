@@ -1,13 +1,14 @@
 # README #
 
 
-This repo contains the codes for paper [Integrated Task Assignment and Path Planning for Capacitated Multi-Agent Pickup and Delivery](https://arxiv.org/abs/2110.14891).
+Questa repository contiene una modifica del seguente progetto [MCA-RMCA](https://github.com/nobodyczcz/MCA-RMCA).
+Per ulteriori informazioni e librerie necessarie consultare il progetto originale.
 
 
-## Compiling
+## Compilazione
 
 
-Clone this repo.
+Clona questa repository.
 
 ```
 $ mkdir build
@@ -16,128 +17,56 @@ $ cmake ../
 $ make
 ```
 
-### Dependencies
+## Premessa 
 
+Il progetto MCA-RMCA offre una soluzione alternativa al problema Path-Finding e Task Assignment eseguendo le operazioni contemporaneamente. Come si può vedere dai risultati mostrati dal paper di riferimento [Integrated Task Assignment and Path Planning for Capacitated Multi-Agent Pickup and Delivery](https://arxiv.org/abs/2110.14891), questa soluzione migliora le performance rispetto gli algoritmi classici. Il nostro progetto ha come obiettivo l'analisi dei singoli problemi (Path-Finding e Task Assignment).  
 
-**Boost**, **Google-sparsehash** are required for compiling.
+## Descrizione del progetto
+Il progetto prende in input:
+1.una mappa contenente informazioni riguardanti gli agenti, gli ostacoli e le stazioni
+2.un insieme di task (start, goal)
+Restituendo in output l'assegnamento che minimizza il Total-travel-delay.
+Per farlo viene utilizzato un algoritmo di tipologia A* in cui la stima del percorso minimo che un robot deve fare per svolgere un task viene eseguita ignorando la posizione e il tragitto degli altri robot. In questo modo la stima sarà sempre minore o uguale al costo richiesto realmente per trasportare il task dallo start al goal. 
 
-If using ubuntu, you can install them by:
+## Esempi d'uso e Argomenti
+Mostriamo il comando di esecuzione:
 ```
-$ sudo apt-get update
-$ sudo apt-get install sparsehash
-$ sudo apt-get install libboost-all-dev
-```
-
-They are also available on Homebrew, if using mac os.
-
-
-## Usage Examples and Arguments
-
-
-Kiva Instances are provided in **examples** folder. 
-
-**kiva-agent-maps**: Including a kiva map with different amount of agents on the map. In each map, "@" indicate obstcale, "." indicate an open space, "e" indicate an endpoint, and "r" indicate an agent initial location.
-For example, kiva-10-500-5 indicate a map with 10 agents on the map. All maps have same layout, 
-just agents are different.
-
-**kiva-tasks**: Including 25 kiva task instance with different release frequency. The number in first column is task release timestep, second column is the task starting endpoint ID, the third column is the task goal endpoint ID.
-For example, the folder with name 0.2-500 indicate each instance have 500 tasks with release frequency of 0.2. 
-For folder without frequency, all tasks are released at timestep 0.
-
-```
-$ ./mapd -m path/to/kiva-agent-maps/kiva-10-500-5.map 
-    -a path/to/kiva-agent-maps/kiva-10-500-5.map
-    -t path/to/kiva-tasks/1-500/0.task
-    -c 60
-    -s PP
-    --capacity 1
-    --objective total-travel-delay
-    --only-update-top
-    --kiva
-    -o path/to/output/file
+$ ./MAPD -m kiva-20-500-5.map
+  -a kiva-20-500-5.map
+  -t 0.task 
+  --capacity 1
+  -o output_PP_2.txt 
 ```
 
-**-m [path]** indicate a map to load
+**-m [path]** indica la mappa da caricare 
 
-**-a [path]** indicate the agents to load
+**-a [path]** indica gli agenti da caricare
 
-**-t [path]** indicate the task to load
+**-t [path]** indica i task da caricare
 
-**-s pp** must have this to run coupled task and path planning
+**--capacity** capacità massima degli agenti
 
-**--capacity** the maximun capacity of agents
-
-**--kiva** must have this argument to load kiva instances in examples.
-
-**--objective [total-travel-delay]** The optimize objective, can be total-travel-delay or makespan
-
-**--online** run example in lifelong mode. Without this argument, codes run in offline mode.
-
-**--only-update-top** must have this to only update the top elements in the heaps.
-
-**--regret** run in RMCA. Without this argument codes run as MCA
-
-**--anytime** enable anytime improvement after assignment.
-
-**--group-size [8]** group size for anytime improvement.
-
-**--destory-method [random]** can be "destory-max","multi-max","random"
-
-**-c [60]** only limit each anytime optimization time. For offline mode, you can set -c as long as possible. For online mode, we only give several seconds for optimze as optimize repeat many times by the assignment process.
+**-o** specifica il file di output
 
 
-## Example arguments to recreate algorithms in the paper
-
-
-### MCA
-
-Offline:
+## Output 
+L' output generato si presenterà nella seguente forma:
 ```
---only-update-top --objective total-travel-delay
+20  //numero di agenti
+100 //numero di task
+0 15 31 37 41 70 79 98 -1   //assegnamento dei task all'agente 0
+1 42 50 71 88 94 99 -1  
+2 14 23 40 47 58 -1
+3 10 61 83 91 -1
+4 7 25 48 80 89 -1
+5 67 69 78 81 -1
 ```
+Dove i primi parametri rappresentano il numero di agenti e il numero di task. 
+Mentre i valori successivi mostrano l'assegnamento dei task all'agente. 
+Il -1 rappresenta la fine della riga di assegnamenti ad un agente (utile per la lettura facilitata da parte del [programma di Path-Finding e Conflict resolution](https://github.com/evolutionapp/ai-lab-2-progetto)).
 
-offline with any time improvement(change numbers and options as your requirements):
-```
---only-update-top --objective total-travel-delay --anytime -c 60 --group-size 5 --destory-method random
-```
-
-Online:
-```
---only-update-top --objective total-travel-delay --online
-```
-
-online with any time improvement(change numbers and options as your requirements):
-```
---only-update-top --objective total-travel-delay --online --anytime -c 1 --group-size 5 --destory-method random
-```
-
-
-### RMCA
-
-Offline:
-```
---regret --only-update-top --objective total-travel-delay
-```
-
-offline with any time improvement(change numbers and options as your requirements):
-```
---regret --only-update-top --objective total-travel-delay --anytime -c 60 --group-size 5 --destory-method random
-```
-
-Online:
-```
---regret --only-update-top --objective total-travel-delay --online
-```
-
-online with any time improvement(change numbers and options as your requirements):
-```
---regret --only-update-top --objective total-travel-delay --online --anytime -c 1 --group-size 5 --destory-method random
-```
-
-**Hints**
-
-Offline examples does not works well with release frequency smaller than 1, as the low level search(path planning) will be extreme slow if a late released task is assigned frist to pick up.
-
+### Vedi anche 
+[secondo-progetto-ai-definitivo](https://github.com/evolutionapp/ai-lab-2-progetto)
 
 
 
