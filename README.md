@@ -65,10 +65,10 @@ L' output generato si presenterà nella seguente forma:
 ```
 Dove i primi parametri rappresentano il numero di agenti e il numero di task. 
 Mentre i valori successivi mostrano l'assegnamento dei task all'agente. 
-Il -1 rappresenta la fine della riga di assegnamenti ad un agente (utile per la lettura facilitata da parte del [programma di Path-Finding e Conflict resolution](https://github.com/evolutionapp/ai-lab-2-progetto)).
+Il -1 rappresenta la fine della riga di assegnamenti ad un agente (utile per la lettura facilitata da parte del [programma di Path-Finding e Conflict resolution](https://github.com/evolutionapp/secondo-progetto-ai-definitivo)).
 
 ### Vedi anche 
-[secondo-progetto-ai-definitivo](https://github.com/evolutionapp/ai-lab-2-progetto)
+[secondo-progetto-ai-definitivo](https://github.com/evolutionapp/secondo-progetto-ai-definitivo)
 
 
 
