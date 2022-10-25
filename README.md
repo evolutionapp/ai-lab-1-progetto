@@ -31,7 +31,7 @@ Per farlo viene utilizzato un algoritmo di tipologia A* in cui la stima del perc
 ## Esempi d'uso e Argomenti
 Mostriamo il comando di esecuzione:
 ```
-$ ./MAPD -m kiva-20-500-5.map
+./MAPD -m kiva-20-500-5.map
   -a kiva-20-500-5.map
   -t 0.task 
   --capacity 1
