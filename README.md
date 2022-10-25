@@ -25,6 +25,8 @@ Il progetto MCA-RMCA offre una soluzione alternativa al problema Path-Finding e 
 Il progetto prende in input:
 1. una mappa contenente informazioni riguardanti gli agenti, gli ostacoli e le stazioni
 2. un insieme di task (start, goal)
+
+
 Restituendo in output l'assegnamento che minimizza il Total-travel-delay.
 Per farlo viene utilizzato un algoritmo di tipologia A* in cui la stima del percorso minimo che un robot deve fare per svolgere un task viene eseguita ignorando la posizione e il tragitto degli altri robot. In questo modo la stima sarà sempre minore o uguale al costo richiesto realmente per trasportare il task dallo start al goal. 
 
