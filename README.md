@@ -75,6 +75,7 @@ L' output generato si presenterà nella seguente forma:
 Dove i primi parametri rappresentano il numero di agenti e il numero di task. 
 Mentre i valori successivi mostrano l'assegnamento dei task all'agente. 
 Il -1 rappresenta la fine della riga di assegnamenti ad un agente (utile per la lettura facilitata da parte del [programma di Path-Finding e Conflict resolution](https://github.com/evolutionapp/secondo-progetto-ai-definitivo)).
+
 ## Esempio di esecuzione e risultati
 Di seguito presentiamo un esempio di esecuzione del programma in cui viene mostrato come avviene l'assegnamento di un task.
 Nella prima parte viene presentato il task da assegnare con i relativi parametri:
