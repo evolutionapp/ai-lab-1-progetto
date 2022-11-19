@@ -75,7 +75,88 @@ L' output generato si presenterà nella seguente forma:
 Dove i primi parametri rappresentano il numero di agenti e il numero di task. 
 Mentre i valori successivi mostrano l'assegnamento dei task all'agente. 
 Il -1 rappresenta la fine della riga di assegnamenti ad un agente (utile per la lettura facilitata da parte del [programma di Path-Finding e Conflict resolution](https://github.com/evolutionapp/secondo-progetto-ai-definitivo)).
+## Esempio di esecuzione e risultati
+Di seguito presentiamo un esempio di esecuzione del programma in cui viene mostrato come avviene l'assegnamento di un task.
+Nella prima parte viene presentato il task da assegnare con i relativi parametri:
 
+**-0** indica il tempo al quale viene generato il task
+
+**-92** indica la coordinata di start del task 
+
+**-140** indica la coordinata di goal del task
+
+**-Altri parametri** non necessari nell'esempio proposto
+
+#### Task
+```
+ 0	92	140	0	0
+```
+
+Di seguito presentiamo gli agenti considerati nell'esempio con i relativi parametri:
+
+**-0** id agente
+
+**-(4,31)** coordinate agente
+
+**-1** capacità agente (numero di task trasportabili contemporaneamente)
+
+#### Agenti
+```
+- Agent: 0, (4,31),1
+- Agent: 1, (5,6),1
+- Agent: 2, (5,31),1
+- Agent: 3, (6,2),1
+- Agent: 4, (6,3),1
+- Agent: 5, (6,31),1
+- Agent: 6, (8,33),1
+- Agent: 7, (9,5),1
+- Agent: 8, (9,33),1
+- Agent: 9, (10,33),1
+- Agent: 10, (10,34),1
+- Agent: 11, (12,31),1
+- Agent: 12, (13,33),1
+- Agent: 13, (14,3),1
+- Agent: 14, (14,33),1
+- Agent: 15, (16,31),1
+- Agent: 16, (16,34),1
+- Agent: 17, (17,34),1
+- Agent: 18, (18,34),1
+- Agent: 19, (19,33),1
+```
+Presentiamo, per ogni agente, quanto l'assegnamento del task considerato incide sul total-travel time. 
+Ovviamente il task verrà assegnato all'agente con il cui incremento di costo è minimo.
+
+#### Heap
+```
+//Agente: id MC: incremento di costo
+Task : 0 INCREMENTO DI COSTO : 1
+        Agent: 5 MC: 1
+        Agent: 6 MC: 3
+        Agent: 8 MC: 4
+        Agent: 2 MC: 4
+        Agent: 11 MC: 5
+        Agent: 9 MC: 5
+        Agent: 0 MC: 5
+        Agent: 10 MC: 6
+        Agent: 12 MC: 8
+        Agent: 14 MC: 9
+        Agent: 15 MC: 11
+        Agent: 16 MC: 12
+        Agent: 17 MC: 13
+        Agent: 19 MC: 14
+        Agent: 18 MC: 14
+        Agent: 1 MC: 27
+        Agent: 7 MC: 28
+        Agent: 4 MC: 29
+        Agent: 3 MC: 32
+        Agent: 13 MC: 35
+```
+Come ci si aspettava il task è stato assegnato all'agente 5 in quanto l'incremento di costo era inferiore rispetto a tutti gli altri.
+
+#### Assegnamento
+```
+Task:0 Assegnato all'agente: 5
+```
 ### Vedi anche 
 [secondo-progetto-ai-definitivo](https://github.com/evolutionapp/secondo-progetto-ai-definitivo)
 
