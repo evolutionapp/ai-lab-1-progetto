@@ -37,7 +37,16 @@ Il progetto prende in input:
 
 
 Restituendo in output l'assegnamento che minimizza il Total-travel-delay.
-Per farlo viene utilizzato un algoritmo di tipologia A* in cui la stima del percorso minimo che un robot deve fare per svolgere un task viene eseguita ignorando la posizione e il tragitto degli altri robot. In questo modo la stima sarà sempre minore o uguale al costo richiesto realmente per trasportare il task dallo start al goal. 
+Per farlo viene utilizzato un algoritmo di tipologia A* in cui la stima del percorso minimo che un robot deve fare per svolgere un task viene eseguita ignorando la posizione e il tragitto degli altri robot. In questo modo la stima sarà sempre minore o uguale al costo richiesto realmente per trasportare il task dallo start al goal. La scelta dell'assegnamento viene effettuata in modo greedy scegliendo la copia task-robot che minimizza il costo totale rispetto a tutte le altre possibili coppie.
+Di seguito una breve descrizione del funzionamento dell'algoritmo:
+
+-Costruiamo una matrice H in cui le righe rappresentano i task e le colonne i robot.
+
+
+-Popoliamo la matrice H inserendo nella cella (i,j) il costo totale del robot j per svolgere tutti i task assegnati con l'aggiunta di i.
+
+-La scelta dell'assegnamento dell'i-esimo task avviene selezionando il minimo valore della i-esima riga della matrice H. L'indice di colonna indica il rocot a cui verrà assegnato il task.
+
 
 ## Esempi d'uso e Argomenti
 Mostriamo il comando di esecuzione:
